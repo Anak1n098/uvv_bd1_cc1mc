@@ -1,6 +1,6 @@
 # PSET 1 - Códigos de SQL e PSQL
 
-Este subdiretório armazena os scripts para a geração do banco de dados em [PostgreSQL]() e mostra passo a passo a criação do banco de dados nesse SGBD.
+Este subdiretório armazena os scripts para a geração do banco de dados em [PostgreSQL](https://github.com/Anak1n098/PSET-1/blob/main/Códigos%20SQL%20e%20PSQL/cc1mc_202308549_postgresql.sql) e mostra passo a passo a criação do banco de dados nesse SGBD.
 
 #
 #### PostgreSQL
