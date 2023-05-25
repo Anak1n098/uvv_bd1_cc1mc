@@ -1,6 +1,6 @@
 # Banco de Dados - I [PSET 1]
 #### Aluno: Nicolas Salvador
-#### Monitora: 
+#### Monitora: Suellen Miranda Amorin
 #### Professor: [Abrantes Araujo Silva Filho](https://github.com/abrantesasf)
 #
 ### Sobre o PSET 1
