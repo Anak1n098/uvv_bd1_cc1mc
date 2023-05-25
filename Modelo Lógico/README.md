@@ -9,3 +9,4 @@
 #
 
 # Imagem usada para o projeto:
+![Imagem](https://github.com/Anak1n098/PSET-1/blob/main/Modelo%20L%C3%B3gico/lojas-uvv.png)
