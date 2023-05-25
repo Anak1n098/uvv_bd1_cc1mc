@@ -1,6 +1,6 @@
 # PSET 1 - Códigos de SQL e PSQL
 
-Este subdiretório armazena os scripts para a geração do banco de dados em [PostgreSQL](https://github.com/Anak1n098/PSET-1/blob/main/Códigos%20SQL%20e%20PSQL/cc1mc_202308549_postgresql.sql) e mostra passo a passo a criação do banco de dados nesse SGBD.
+Este suubdiretório contém o código usado para a criação do banco de dados usando [PostgreSQL](https://github.com/Anak1n098/PSET-1/blob/main/Códigos%20SQL%20e%20PSQL/cc1mc_202308549_postgresql.sql) e também há um passo a passo básico de como funciona.
 
 #
 #### PostgreSQL
@@ -21,3 +21,7 @@ As restrições devem ser criadas após a criação da tabela, com o comando `AL
 
 6. ***Os dados*** <br>
 Utlizando o comando `INSERT INTO esquema.tabela (atributo1, atributo2...) VALUES ('tupla1', 'tupla2');` após a criação das tabelas, os dados devem ser inseridos.
+
+# 
+
+Para informações mais detalhadas, olhe o [PDF](https://github.com/Anak1n098/uvv_BD1_cc1mc_PSET1/blob/main/pset1.pdf) dado anteriormente.
