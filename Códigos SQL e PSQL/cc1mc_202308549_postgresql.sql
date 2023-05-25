@@ -1,20 +1,33 @@
---Criando o cargo "nicolas" com todas as permissões necessárias
-
-CREATE ROLE nicolas WITH
- LOGIN
- SUPERUSER
- INHERIT
- CREATEDB
- CREATEROLE
- NOREPLICATION;
+--Banco de Dados 1 - PSET 1
+--Professor: Abrantes Araújo Silva Filho
+--Aluno: Nicolas Salvador
+--Monitora:
+--Turma: CC1Mc
 
 
+--+=+=+=Podemos começar=+=+=+--
 
 
---Criando o banco de dados "UVV"
+--Deletando o banco de dados "uvv" caso já exista
+DROP DATABASE IF EXISTS uvv;
 
-DROP DATABASE IF EXISTS uvv ;
 
+
+--Deletando usuário "nicolas" caso já exista
+DROP USER IF EXISTS nicolas;
+
+
+
+--Criando o usuário "nicolas" com todas as permissões necessárias
+CREATE USER nicolas
+	    encrypted PASSWORD 's3nha'        
+	    CREATEDB          
+	    CREATEROLE        
+	    LOGIN;
+
+
+
+--Criando o banco de dados "uvv"
 CREATE DATABASE uvv
     WITH
     OWNER = nicolas
@@ -27,24 +40,30 @@ CREATE DATABASE uvv
 
 
 
---Fazendo conexão com o banco de dados
+--Entrando no usuário
+SET role nicolas;
 
-\c uvv
+
+
+--Fazendo conexão com o banco de dados
+\c "host=localhost dbname=uvv user=nicolas password=s3nha"
 
 
 
 --Criando a schema "lojas"
-
-DROP SCHEMA IF EXISTS lojas ;
-    CREATE SCHEMA IF NOT EXISTS lojas
+CREATE SCHEMA IF NOT EXISTS lojas
     AUTHORIZATION nicolas;
 
 
 
---Alterando para o usuário e para a criação de tabelas
+--Determinando caminho temporário para criação de tabelas
+SET SEARCH_PATH TO lojas, "$user", public;
 
+
+
+--Alterando para o usuário e para a criação de tabelas
 ALTER USER nicolas;
-SET SEARCH_PATH TO lojas, nicolas, public;
+SET SEARCH_PATH TO lojas, "$user", public;
 
 
 
@@ -136,6 +155,7 @@ CREATE TABLE estoques (
 
 
 --Comentários da tabela "estoques"
+
 COMMENT ON TABLE estoques IS 'Esta tabela contém informações sobre o estoque das lojas.';
 COMMENT ON COLUMN estoques.estoque_id IS 'Esta coluna mostra o id do estoque e é uma PK da tabela "estoques".';
 COMMENT ON COLUMN estoques.quantidade IS 'Esta coluna mostra a quantidade do estoque.';
@@ -255,6 +275,8 @@ COMMENT ON COLUMN pedidos_itens.envio_id IS 'Esta coluna mostra o id do envio e 
 
 --Restrições
 
+
+--Fazendo com que a coluna "produto_id" seja uma FK na tabela "estoques"
 ALTER TABLE estoques ADD CONSTRAINT produtos_estoque_fk
 FOREIGN KEY (produto_id)
 REFERENCES produtos (produto_id)
@@ -262,6 +284,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "produto_id" seja uma FK na tabela "pedidos_itens"
 ALTER TABLE pedidos_itens ADD CONSTRAINT produtos_pedidos_itens_fk
 FOREIGN KEY (produto_id)
 REFERENCES produtos (produto_id)
@@ -269,6 +294,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "loja_id" seja uma FK na tabela "pedidos"
 ALTER TABLE pedidos ADD CONSTRAINT lojas_pedidos_fk
 FOREIGN KEY (loja_id)
 REFERENCES lojas (loja_id)
@@ -276,6 +304,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "loja_id" seja uma FK na tabela "envios"
 ALTER TABLE envios ADD CONSTRAINT lojas_envios_fk
 FOREIGN KEY (loja_id)
 REFERENCES lojas (loja_id)
@@ -283,6 +314,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "loja_id" seja uma FK na tabela "estoques"
 ALTER TABLE estoques ADD CONSTRAINT lojas_estoque_fk
 FOREIGN KEY (loja_id)
 REFERENCES lojas (loja_id)
@@ -290,6 +324,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "cliente_id" seja uma FK na tabela "pedidos"
 ALTER TABLE pedidos ADD CONSTRAINT clientes_pedidos_fk
 FOREIGN KEY (cliente_id)
 REFERENCES clientes (cliente_id)
@@ -297,6 +334,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "cliente_id" seja uma FK na tabela "envios"
 ALTER TABLE envios ADD CONSTRAINT clientes_envios_fk
 FOREIGN KEY (cliente_id)
 REFERENCES clientes (cliente_id)
@@ -304,6 +344,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "envio_id" seja uma FK na tabela "pedidos_itens"
 ALTER TABLE pedidos_itens ADD CONSTRAINT envios_pedidos_itens_fk
 FOREIGN KEY (envio_id)
 REFERENCES envios (envio_id)
@@ -311,9 +354,126 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+
+
+--Fazendo com que a coluna "pedido_id" seja uma FK na tabela "pedidos_itens"
 ALTER TABLE pedidos_itens ADD CONSTRAINT pedidos_pedidos_itens_fk
 FOREIGN KEY (pedido_id)
 REFERENCES pedidos (pedido_id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
+
+
+
+--Criando uma restrição onde a coluna "status" da tabela "pedidos" aceite apenas os valores: CANCELADO, COMPLETO, ABERTO, PAGO, REEMBOLSADO e ENVIADO
+ALTER TABLE pedidos 
+ADD CONSTRAINT status_check 
+CHECK  (status = 'CANCELADO'    	OR 
+	status = 'COMPLETO'     	OR
+	status = 'ABERTO'       	OR
+	status = 'PAGO'	        	OR
+	status = 'REEMBOLSADO'		OR
+	status = 'ENVIADO'
+);
+
+
+
+--Criando uma restrição onde a coluna "data_hora" da tabela "pedidos" apenas aceite datas do dia atual e/ou futuro
+ALTER TABLE pedidos
+ADD CONSTRAINT data_hora_check
+CHECK (data_hora >= current_timestamp);
+
+
+
+--Criando uma restrição onde as colunas "endereco_fisico" e "endereco_web" tenham pelo menos uma delas preenchida
+ALTER TABLE lojas 
+ADD CONSTRAINT endereco_check 
+CHECK ((endereco_web IS NULL OR endereco_fisico IS NOT NULL) OR
+       (endereco_web IS NOT NULL OR endereco_fisico IS NULL)
+);
+
+
+
+--Criando uma restrição onde não permita a coluna "latitude" da tabela "lojas" ter valores inferiores a -90 ou superiores a 90
+ALTER TABLE lojas
+ADD CONSTRAINT latitude_check
+CHECK (latitude >= -90 AND
+       latitude <= 90
+);
+
+
+
+--Criando uma restrição onde não permita a coluna "longitude" da tabela "lojas" ter valores inferiores a -180 ou superiores a 180
+ALTER TABLE lojas
+ADD CONSTRAINT longitude_check
+CHECK (longitude >= -180 AND
+       longitude <= 180
+);
+
+
+
+--Criando uma restrição onde a coluna "logo_ultima_atualizacao" da tabela "lojas" apenas aceite datas passadas ou atual
+ALTER TABLE lojas
+ADD CONSTRAINT data_hora_lojas_check
+CHECK (logo_ultima_atualizacao <= current_timestamp);
+
+
+
+--Criando uma restrição onde não permita a coluna "preco_unitario" da tabela "produtos" ter valores negativos
+ALTER TABLE produtos 
+ADD CONSTRAINT preco_check 
+CHECK (preco_unitario > 0);
+
+
+
+--Criando uma restrição onde a coluna "imagem_ultima_atualizacao" da tabela "produtos" apenas aceite datas passadas ou atual
+ALTER TABLE produtos
+ADD CONSTRAINT data_hora_produtos_check
+CHECK (imagem_ultima_atualizacao <= current_timestamp);
+
+
+
+--Criando uma restrição onde não permita a coluna "quantidade" da tabela "estoques" ter valores negativos
+ALTER TABLE estoques  
+ADD CONSTRAINT quantidade_check 
+CHECK (quantidade >= 0);
+
+
+
+--Criando uma restrição onde a coluna "email" da tabela "cliente" possua "@"
+ALTER TABLE clientes
+ADD CONSTRAINT email_check
+CHECK (email LIKE '%@%' 	AND 
+       email LIKE '%.%' 	AND	
+       email NOT LIKE '%@%@%'
+);
+
+
+
+--Criando uma restrição onde a coluna "status" da tabela "envios" aceite apenas os valores: CRIADO, ENVIADO, TRANSITO e ENTREGUE
+ALTER TABLE envios 
+ADD CONSTRAINT status_envios_check 
+CHECK  (status = 'CRIADO'    	OR 
+	status = 'ENVIADO'   	OR
+	status = 'TRANSITO'  	OR
+	status = 'ENTREGUE'
+);
+
+
+
+--Criando uma restrção onde não permita a coluna "preco_unitario" da tabela "pedidos_itens" ter valores negativos
+ALTER TABLE pedidos_itens 
+ADD CONSTRAINT preco_itens_check 
+CHECK (preco_unitario > 0);
+
+
+
+--Fazendo com que o meu usuário seja o dono das tabelas
+ALTER TABLE clientes 	 		OWNER TO nicolas;
+ALTER TABLE produtos 	 		OWNER TO nicolas;
+ALTER TABLE lojas    	 		OWNER TO nicolas;
+ALTER TABLE envios    	 		OWNER TO nicolas;
+ALTER TABLE pedidos  	 		OWNER TO nicolas;
+ALTER TABLE pedidos_itens		OWNER TO nicolas;
+ALTER TABLE estoques     		OWNER TO nicolas;
