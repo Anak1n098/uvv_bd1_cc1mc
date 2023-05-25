@@ -6,3 +6,6 @@
 
 #
 ### Abra o arquivo .architect com o [Power Architect](https://bestofbi.com/products/sql-power-architect-data-modeling/)
+#
+
+# Imagem usada para o projeto:
