@@ -85,4 +85,4 @@ Utlizando o comando `INSERT INTO esquema.tabela (atributo1, atributo2...) VALUES
 
 # 
 
-Para informações mais detalhadas, olhe o [PDF](https://github.com/Anak1n098/uvv_BD1_cc1mc_PSET1/blob/main/pset1.pdf) dado anteriormente.
+Para informações mais detalhadas, olhe o [PDF](https://github.com/Anak1n098/uvv_bd1_cc1mc/blob/main/pset1.pdf) dado anteriormente.
