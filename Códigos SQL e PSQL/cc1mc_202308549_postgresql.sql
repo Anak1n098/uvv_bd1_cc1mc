@@ -444,9 +444,7 @@ CHECK (quantidade >= 0);
 --Criando uma restrição onde a coluna "email" da tabela "cliente" possua "@"
 ALTER TABLE clientes
 ADD CONSTRAINT email_check
-CHECK (email LIKE '%@%' 	AND 
-       email LIKE '%.%' 	AND	
-       email NOT LIKE '%@%@%'
+CHECK (email LIKE '%@%'
 );
 
 
