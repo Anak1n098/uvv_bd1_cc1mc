@@ -53,7 +53,7 @@ Este projeto foi uma coisa muito diferente de tudo que ja fiz. Um dos únicos tr
 #
 
 # Imagem usada para o projeto:
-![Imagem](https://github.com/Anak1n098/PSET-1/blob/main/Modelo%20L%C3%B3gico/lojas-uvv.png)
+![Imagem](https://github.com/Anak1n098/uvv_bd1_cc1mc/blob/main/lojas-uvv.png)
 
 
 #
@@ -61,7 +61,7 @@ Este projeto foi uma coisa muito diferente de tudo que ja fiz. Um dos únicos tr
 #
 # PSET 1 - Código PSQL
 
-Este suubdiretório contém o código usado para a criação do banco de dados usando [PostgreSQL](https://github.com/Anak1n098/PSET-1/blob/main/Códigos%20SQL%20e%20PSQL/cc1mc_202308549_postgresql.sql) e também há um passo a passo básico de como funciona.
+Este suubdiretório contém o código usado para a criação do banco de dados usando [PostgreSQL](https://github.com/Anak1n098/uvv_bd1_cc1mc/blob/main/pset1/cc1mc_202308549_postgresql.sql) e também há um passo a passo básico de como funciona.
 
 #
 #### PostgreSQL
