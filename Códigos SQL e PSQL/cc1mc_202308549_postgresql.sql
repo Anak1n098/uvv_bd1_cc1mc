@@ -46,7 +46,7 @@ SET role nicolas;
 
 
 --Fazendo conexão com o banco de dados
-\c "host=localhost dbname=uvv user=nicolas password=s3nha"
+\c "dbname=uvv user=nicolas password=s3nha"
 
 
 
