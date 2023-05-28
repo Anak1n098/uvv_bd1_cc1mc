@@ -9,7 +9,7 @@ Este PSET (Problem Set) consiste em perguntas desafiadoras elaboradas pelo profe
 
 #
 
-Este diretório tem a função de conter cada subdiretório específico com os arquivos do PSET 1, trabalho da disciplina *Banco de Dados - I* do curso *Ciência da Computação na Universidade Vila Velha*.
+Este diretório tem a função de conter cada item usado para e com os arquivos do PSET 1, trabalho da disciplina *Banco de Dados - I* do curso *Ciência da Computação na Universidade Vila Velha*.
 #
 
 ### Linguagem Markdown.
@@ -61,7 +61,7 @@ Este projeto foi uma coisa muito diferente de tudo que ja fiz. Um dos únicos tr
 #
 # PSET 1 - Código PSQL
 
-Este suubdiretório contém o código usado para a criação do banco de dados usando [PostgreSQL](https://github.com/Anak1n098/uvv_bd1_cc1mc/blob/main/pset1/cc1mc_202308549_postgresql.sql) e também há um passo a passo básico de como funciona.
+Aqui há o código em [PostgreSQL](https://github.com/Anak1n098/uvv_bd1_cc1mc/blob/main/pset1/cc1mc_202308549_postgresql.sql) para a criaçao do banco de dados e também há um passo a passo básico de como funciona.
 
 #
 #### PostgreSQL
